@@ -1,0 +1,746 @@
+\documentclass[a4paper, 11pt,french]{article}
+\usepackage[dvips,top=1.5cm, bottom=1.5cm, left=1.5cm, right=1.5cm]{geometry}
+\usepackage{PreambuleXelatex}
+\usepackage{MacroTikz}
+\usepackage{MacroDoc}
+\pagestyle{empty}
+\setlength{\parindent}{0em}
+\newtheorem*{theo}{Théorème}
+\newtheorem*{test}{Test}
+
+\title{\Large{Devoir Maison Algorithmique - Étienne Grandjean}}
+
+\author{\large{Stéphane SECOUARD}} 
+
+\begin{document}
+
+
+
+
+\vfill
+ 
+
+\maketitle % Page de garde.
+
+\vfill
+
+
+\begin{center}
+    \rule{7cm}{0.5pt}
+\end{center}
+
+\
+
+\vfill
+
+\tableofcontents
+
+\vfill
+\vfill
+\vfill
+
+
+                \newpage
+
+
+%______________________exo1________________________
+\section*{Exercice 1}
+\addcontentsline{toc}{section}{Exercice 1}
+
+\subsection*{Question 1 :}
+\addcontentsline{toc}{subsection}{Question 1}
+
+Une naissance correspond à \emph{une épreuve de Bernoulli} en ce sens que deux résultat sont possibles :
+\begin{itemize}
+\item le succès : le nouveau né est une fille. Sa probabilité est $p=\frac{1}{2}$.
+\item l'échec : le nouveau né est un garçon. Sa probabilité est $q=\frac{1}{2}$.
+\end{itemize}
+
+On répète l'épreuve de Bernoulli de façon \emph{indépendante}.
+
+\medskip
+
+Soit $X$ le nombre de \emph{répétitions de l'épreuve de Bernoulli} qu'il faut faire pour rencontrer un succès : c'est la définition de la loi géométrique de paramètre $p=\frac{1}{2}$.
+
+\bigskip
+
+On peut alors calculer l'epérance de $X$ qui donne le nombre d'enfants à avoir en moyenne pour avoir une fille : $\underline{E(X)=}\frac{1}{p}=\dfrac{1}{\frac{1}{2}}=\underline{2}$.
+
+Cependant, nous cherchons à établir le nombre moyen de garçons obtenu avant d'avoir une fille.
+
+Comme l'espérance de X donne le nombre moyen d'enfants (donc en comptant aussi la fille) on peut donc en déduire que 
+\fbox{\textbf{le nombre moyen de garçons obtenu avant d'avoir une fille est de $1$.}}
+
+\bigskip
+
+\begin{center}
+\line(1,0){250}
+\end{center}
+
+\bigskip
+
+\subsection*{Question 2 : }
+\addcontentsline{toc}{subsection}{Question 2}
+
+Cette situation ressemble à la précédente si ce n'est qu'on s'arrête quoi qu'il arrive au bout de k étapes.
+
+
+Ainsi les probabilités associées sont les mêmes jusqu'à l'étape $k-1$. Plus précisemment, si $X$ désigne le nombre d'étapes à réaliser pour stopper le processus (ne plus faire d'enfant), on a :
+
+\begin{itemize}
+\item $P(X=l)=pq^{l-1}$ pour $1\leqslant l \leqslant k-1$ donc comme $p=q=\frac{1}{2}$, $P(X=l)=\dfrac{1}{2^{l}}$
+\item $P(X=k)=pq^{k-1}+q^k$ qui donne pour $p=q=\frac{1}{2}$, $P(X=k)=2p^k=\dfrac{1}{2^{k-1}}$.
+\end{itemize}
+
+Mais ce qui nous intéresse pour cette question est plutôt de savoir combien de fille et de garçons nous avons dans chaque cas.
+
+Or si $P(X=l)$ avec $1\leqslant l\leqslant k-1$ correspond bien à la probabilité d'avoir 1 fille et $l-1$ garçons, $P(X=k)$ ne donne que la probabilité d'avoir $k$ enfants (1fille et k-1 garçons ou k garçons). C'est pourquoi, comme ces deux issues sont équiprobables, on obtient les probabilités de chacune de ces deux issues en divisant par 2 (on obtient alors $\frac{1}{2^k}$).
+
+Ainsi :  
+
+\begin{itemize}
+\item la probabilité d'avoir une fille et 0 garçon est $1/2$
+\item la probabilité d'avoir une fille et 1 garçon est $1/2^2$
+\item la probabilité d'avoir une fille et 2 garçons est $1/2^3$
+
+  \ldots
+
+\item la probabilité d'avoir une fille et k-2 garçons est $1/2^{k-1}$
+\item la probabilité d'avoir une fille et k-1 garçons est $1/2^{k}$
+
+  la dernière ligne ne suit pas la même régularité :
+  
+\item la probabilité d'avoir k garçons (sans fille) est $1/2^{k}$
+\end{itemize}
+
+\begin{tikzpicture}[xscale=1,yscale=0.7]
+  \draw(2,3) node{\textbf{Illustration}};
+  \draw (2,7) node[fill=white]{$F$};
+  \draw[dotted](2.3,7)--(12,7) (14,7) node {$Pr(1F ; 0 G)=1/2$};
+  \draw (4,6) node[fill=white]{$F$};
+  \draw[dotted](4.3,6)--(12,6) (14,6) node {$Pr(1F ; 1 G)=1/2^2$};
+  \draw (6,5) node[fill=white]{$F$};
+  \draw[dotted](6.3,5)--(12,5) (14,5) node {$Pr(1F ; 2 G)=1/2^3$};
+  \draw (10,3) node[fill=white]{$F$};
+  \draw[dotted](10.3,3)--(12,3) (14,3) node {$Pr(1F ; (k-1) G)=1/2^k$};
+  \draw[dotted](13,4.6)--(13,3.4);
+  \draw[dotted](14,4.6)--(14,3.4);
+  \draw[dotted](15,4.6)--(15,3.4);
+  \draw (2,5) node[fill=white]{$G$};
+  \draw (4,4) node[fill=white]{$G$};
+  \draw (6,3) node[fill=white]{$G$};
+  \draw (10,1) node[fill=white]{$G$};
+  \draw[dotted](10.3,1)--(12,1) (14,1) node {$Pr(0F ; k G)=1/2^k$};
+  \draw (0,6)--(1.7,7) node[midway, above, sloped]{$\frac{1}{2}$};
+  \draw (2.3,5)--(3.7,6) node[midway, above, sloped]{$\frac{1}{2}$};
+  \draw (4.3,4)--(5.7,5) node[midway, above, sloped]{$\frac{1}{2}$};
+  \draw (8.3,2)--(9.7,3) node[midway, above, sloped]{$\frac{1}{2}$};
+  \draw (0,6)--(1.7,5) node[midway, below, sloped]{$\frac{1}{2}$};
+  \draw (2.3,5)--(3.7,4) node[midway, below, sloped]{$\frac{1}{2}$};
+  \draw (4.3,4)--(5.7,3) node[midway, below, sloped]{$\frac{1}{2}$};
+  \draw (8.3,2)--(9.7,1) node[midway, below, sloped]{$\frac{1}{2}$};
+  \draw[dotted](6.3,3)--(8,2);
+
+
+
+
+\end{tikzpicture}
+
+
+\medskip
+
+Calcul des moyennes :
+\begin{description}
+\item[pour les filles : ]
+  Si F désigne la variable aléatoire donnant le nombre de filles, comme il n'y a que 1 fille ou pas de fille, il est simple de voir que l'on a :
+  \begin{eqnarray*}
+    E(F)&=&P(F=0)\times 0 + P(F=1) \times 1\\
+    &=& P(F=1)\\
+    &=& 1-P(F=0)\\
+    &=& 1-\frac{1}{2^k}
+  \end{eqnarray*}
+\item[pour les garçons : ]
+  Si G désigne la variable aléatoire donnant le nombre de garçons, compte-tenu des probabilités données précédemment, on a :
+  \begin{eqnarray*}
+    E(G)&=&P(G=0)\times 0 + P(G=1)\times 1 + \ldots +P(G=k-1)\times (k-1) + P(G=k) \times k\\
+    &=& \sum_{i=0}^{k-1}\dfrac{i}{2^{i+1}} + \dfrac{k}{2^k}\\
+    &=& \sum_{i=0}^{k-1}\dfrac{i}{2^{i+1}} + \dfrac{k}{2^{k+1}} + \dfrac{k}{2^{k+1}}\\
+    &=& \sum_{i=0}^{k}\dfrac{i}{2^{i+1}} + \dfrac{k}{2^{k+1}}\\
+  \end{eqnarray*}
+
+  Après quelques essais numériques j'ai constaté que cette valeur était la même que celle obtenue pour l'espérance du nombre de filles.
+
+  Je vais donc montrer par récurrence que mes résultats numériques se généralisent (je n'ai pas trouvé plus élégant):
+  
+  \rec[k]{$\sum_{i=0}^{k}\dfrac{i}{2^{i+1}} + \dfrac{k}{2^{k+1}}=1-\dfrac{1}{2^k}$}
+      {1}
+      {D'une part $\sum_{i=0}^{1}\dfrac{i}{2^{i+1}} + \dfrac{1}{2^{1+1}}=\dfrac{1}{2^2}+\dfrac{1}{2^2}=\dfrac{1}{2}$
+        
+        D'autre par $1-\dfrac{1}{2^1}=\dfrac{1}{2}$
+      }
+      {       \begin{eqnarray*}
+          \sum_{i=0}^{k+1}\dfrac{i}{2^{i+1}} + \dfrac{k+1}{2^{k+1+1}}
+          &=&
+          \sum_{i=0}^{k}\dfrac{i}{2^{i+1}} + \dfrac{k+1}{2^{k+2}} + \dfrac{k+1}{2^{k+2}}\\
+          &=&\sum_{i=0}^{k}\dfrac{i}{2^{i+1}} + \dfrac{k+1}{2^{k+1}} \\
+          &=&\sum_{i=0}^{k}\dfrac{i}{2^{i+1}} + \dfrac{k}{2^{k+1}}+ \dfrac{1}{2^{k+1}} \\
+          &=&1-\dfrac{1}{2^k}+\dfrac{1}{2^{k+1}} \hfill\makebox{ C'est l'hypothèse de récurrence}\\
+          &=&1-\dfrac{2}{2^{k+1}}+\dfrac{1}{2^{k+1}}\\
+          &=&1-\dfrac{1}{2^{k+1}}
+        \end{eqnarray*}
+      }
+\end{description}
+
+
+On a donc prouvé que dans ce cas :
+
+\fbox{\textbf{le nombre moyen de filles obtenu est le même que celui de garçons : dans chaque cas $1-\dfrac{1}{2^{k+1}}$}}
+
+Que le nombre d'enfants soit en moyenne moins élevé qu'au cas précédent semble logique puisqu'on s'autorise moins d'enfants. Par contre que les deux moyennes soient les mêmes pour les filles et les garçons est assez contre intuitif car on pourrait penser que le nombre de filles ``non faites'' ne compense pas le nombre de garçons mais ce n'est pas le cas.
+
+%______________________exo 2________________________
+
+\bigskip
+
+\hrule\hrule
+
+\bigskip
+
+\section*{Exercice 2 :}
+\addcontentsline{toc}{section}{Exercice 2}
+
+\subsection*{Question 1 :}
+\addcontentsline{toc}{subsection}{Question 1}
+\begin{description}
+\item[Cas général avec n>2 : ] Voici l'algorithme dans le cas où $n>2$ : 
+\begin{center}
+  \begin{tabular}{|l|l|l|l|}
+    \hline
+    1& \multicolumn{3}{|l|}{a=n (a est le nombre de processeurs actifs)}\\
+    2&\multicolumn{3}{|l|}{Répéter jusqu'à obtention d'un chef}\\
+    3&\makebox[5mm]{}&\multicolumn{2}{|l|}{Chacun des a processeurs actifs choisit au hasard un entier entre 1 et a}\\
+    3&&\multicolumn{2}{|l|}{Chaque processeur qui a choisi 1 le dit à son suivant et compte le nombre de 1 tirés.}\\
+    4&&\multicolumn{2}{|l|}{Si c=1 :}\\
+    5&&\multicolumn{2}{|l|}{Alors le processeur qui a tiré 1 est le chef}\\
+    6&&\multicolumn{2}{|l|}{Sinon :}\\
+    7&&\multicolumn{2}{|l|}{SI $c\neq 0$}\\
+    8&&\multicolumn{2}{|l|}{Chacun des processeurs qui a un entier différent de 1 devient inactif et a=c}\\
+    \hline
+  \end{tabular}
+\end{center}
+
+\item[Cas n=2 : ]\ 
+  
+\begin{center}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    1&\multicolumn{2}{|l|}{Répéter jusqu'à l'obtention d'un chef :}\\
+    2&\makebox[5mm]{}&Chaque processeur $a_1$ et $a_2$ choisit un nombre 0 ou 1 et envoie son choix à l'autre\\
+    3&& Si un exactement des deux processeurs a choisi 1 c'est lui le chef\\
+    \hline
+  \end{tabular}
+\end{center}
+
+\item[nombre de phases : ] Le nombre de phases $T_n$ peut prendre toutes valeurs entières supérieures ou égales à 1 car :
+  \begin{itemize}
+  \item dans le meilleur des cas il y a un seul processeur à 1 dès le premier tour et c'est lui le chef : 1 seul tour de boucle.
+  \item dans le pire des cas il est toujours possible que sur un tour de boucle tous les processeurs actifs ne choisissent pas 1 et la situation n'évolue pas. En répétant cette situation, le nombre de phases peut atteindre n'importe quelle valeur entière plus grande que 1.
+    \item Ceci illustre bien que nous sommes dans un processus dit \og Las Vegas \fg car son temps d'exécution n'est pas borné mais que le résultat obtenu est bon dans tous les cas.
+    \end{itemize}
+
+  
+\end{description}
+
+\subsection*{Question 2 : }
+\addcontentsline{toc}{subsection}{Question 2}
+Les consignes qui sont répétées dans la boucle peuvent amener à quatre situations équiprobables : $(0 ; 0)$ ou $(1 ; 0)$ ou $(0;1)$ ou $(1;1)$.
+
+Deux d'entre elles permettent de déterminer un chef.
+
+La probabilité de déterminer un chef est donc exactement de $\frac{1}{2}$ à chaque phase.
+
+La variable aléatoire $T_2$ donnant le nombre de phases nécessaire à la détermination d'un chef est suit donc une loi géométrique de paramètre $p=\frac{1}{2}$.
+
+Ainsi, on peut en calculer les éléments suivants :
+\begin{itemize}
+\item[$\bullet$] $E(T_2)=\dfrac{1}{p}=\dfrac{1}{\frac{1}{2}}=2$
+\item[$\bullet$] $V(E_2)=\dfrac{1-p}{p^2}=\dfrac{\frac{1}{2}}{\frac{1}{4}}=2$
+\item[$\bullet$] $\sqrt{V(E_2)}=\sqrt{2}$
+\end{itemize}  
+
+%______________________exo 3________________________
+
+\bigskip
+
+\hrule\hrule
+
+\bigskip
+
+\section*{Exercice 3 :}
+\addcontentsline{toc}{section}{Exercice 3}
+
+\subsection*{Question 1 :}
+\addcontentsline{toc}{subsection}{Question 1}
+Soient trois entiers $a$, $p$ et $n \geqslant 1$ tels que $a < n$.
+Voici un algorithme qui calcule l’entier $a^p$ mod $n$.
+
+
+\begin{center}
+  \begin{tabular}{|l|l|l|}
+    \hline
+    1& \multicolumn{2}{|l|}{resultat=1 , puissance=a, w=p}\\
+    2& \multicolumn{2}{|l|}{tant que w>0:}\\
+    3& & si w=1 [mod 2]\\
+    4& & alors resultat=puissance $\times$ resultat [mod n]\\
+    5& & puissance=puissance $\times$  puissance [mod n]\\
+    6& & w=w//2 (division entière)\\
+    7& \multicolumn{2}{|l|}{renvoyer resultat}\\\hline
+  \end{tabular}
+\end{center}
+
+\subsection*{Question 2 :}
+\addcontentsline{toc}{subsection}{Question 2}
+
+\begin{itemize}
+\item $p$ s'écrit en binaire en utilisant la décomposition en base 2 de $p$, plus précisemment, si $2^{l-1}\leqslant p< 2^l$ alors on a  $p=\sum_{k=0}^{l-1} p_k\times 2^k$.
+
+  Ainsi la taille de l'écriture en binaire sera $l$.
+
+  En appliquant le $log_2$ à l'inégalité précédente on a : $l-1\leqslant log_2(p) <l$.
+
+  On peut donc en déduire que $l=\lfloor log_2(p)\rfloor +1$.
+
+
+\item Dans l'algorithme chaque tour de boucle correspond à l'exploration d'un bit de $p$(puisqu'on divise par deux à chaque étape, ce qui revient à l'exploration  des bits de $p$ de droite à gauche).
+
+  Ainsi il y a exactement $l$ tours de boucle (puisque c'est la taille du développement binaire de $p$).
+
+  Dans la boucle, il y a deux multiplications modulaires : celle de la ligne 5 qui s'effectue systématiquement et celle de la ligne 4 qui s'effectue si et seulement si le bit de $p$ étudié est 1.
+
+  Le nombre de multiplications modulaires est de $l$ + nombre de 1 dans l'écriture en binaire de $p$.
+\item Ainsi, si $p$ ne contient que des 1, alors il y a $2l$ multiplications et si $p$ est une puissance de $2$ il y a exactement $l+1$ multiplications. C'est l'intervalle du nombre de multiplications pour $p$ de longueur $l$.
+  \item Le nombre exacte de multiplications est exactement $l+u$ où $l$ est la longueur de $p$ et $u$ le nombre de bits 1 de $p$.
+\end{itemize}
+
+\subsection*{Question 3 :}
+\addcontentsline{toc}{subsection}{Question 3}
+
+\begin{itemize}
+\item les lignes 4 et 7 sont négligeables en complexité par rapport aux multiplications car effectuer le modulo 2 revient à lire le bit de poids faible tandis que la division entière par 2 consiste à enlever le bit de poids faible.
+\item On peut donc dire que la complexité de l'algorithme correspond aux calculs des multiplications (qui sont entre $l$ et $2l$ donc en $O(l)$).
+\item Comme chaque multiplication s'effectue en $O(l\log l)$, on en déduit que la complexité de cette algorithme est en $O(l^2\log l)$.
+\item Pour $l\approx 10\,000$, on obtient une complexité en temps de l'ordre du milliard.
+  \item en multipliant la taille $l$ par 2, la complexité en temps augmente d'une valeur de l'ordre de $4 \log 2 \approx 3$.
+\end{itemize}
+
+\subsection*{Question 4 :}
+\addcontentsline{toc}{subsection}{Question 4}
+
+Voici l'algorithme réalisé sous python qui implémente la fonction expo(a,p,n) qui retourne $a^n  [mod \, p]$ et le nombre de multiplications effectuées :
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\newcommand\esp{\hspace{1cm}}
+
+  def expo(a,p,n):
+  
+  \esp    resultat,puissance,w,mult=1,a,p,0
+  
+  \esp    while w>0:
+  
+  \esp\esp        if w\%2==1:
+  
+  \esp\esp\esp            resultat=puissance*resultat\%n
+  
+  \esp\esp\esp            mult+=1
+  
+  \esp\esp        puissance=puissance*puissance\%n
+  
+  \esp \esp      mult+=1
+  
+  \esp  \esp      w=w//2
+  
+  \esp    return (resultat,mult)
+  
+
+%if __name__=='__main__':
+    
+%    print(expo(23,2**50,13))
+%\end{center}
+\end{minipage}
+\end{center}
+
+\subsection*{Question 5 : }
+\addcontentsline{toc}{subsection}{Question 5}
+J'ai ajouté à la suite du code donné à la question 4  ceci :
+
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+\newcommand\esp{\hspace{1cm}}
+def genere(borneinf,bornesup):
+
+\esp    l=[ ]
+
+\esp    for k in range(1000):
+
+\esp\esp        l.append(randint(borneinf,bornesup))
+
+\esp    return l
+
+
+
+
+if \_\_name\_\_=='\_\_main\_\_':
+
+\esp    a,n=123,987
+
+\esp    l=genere(2**19,2**20-1)
+
+\esp    compteur=0
+
+\esp    for k in l:
+
+\esp\esp        compteur+=expo(a,k,n)[1]
+
+\esp    moyenne=compteur/len(l)
+
+\esp    print(moyenne)
+
+\end{minipage}
+\end{center}
+
+On obtient comme moyenne 30 (je n'ai pas eu d'autres valeurs dans mes essais).
+
+C'est logique car on a vu que le nombre de multiplications est donné par $l+u$. Or ici $l=20$ car les valeurs de $p$ sont prises entre $2^{19}$ et $2^{20}-1$.
+De plus, comme ces valeurs sont des générations aléatoires de 20 bits, en moyenne, il y a 10 fois le bit 1 et 10 fois le bit 0 : cela donne en moyenne une valeur pour u de 10.
+
+On retrouve bien en moyenne 20+10=30.
+
+
+%______________________exo 4________________________
+\section*{Exercice 4}
+\addcontentsline{toc}{section}{Exercice 4}
+
+
+\subsection*{Question 1 :}
+\addcontentsline{toc}{subsection}{Question 1}
+\begin{description}
+\item[Rappel du théorème : ]
+  \
+  
+  \begin{theo}[Schwartz et Zippel]
+    \
+    
+    \begin{itemize}
+    \item Soit $K$ un corps quelconque et un ensemble fini $S\subseteq K$ quelconque.
+    \item Soit un polynôme $P(x_1,\ldots,x_n)\in K[x_1,\ldots,x_n]$ non nul de degré total $d$.
+    \item \textbf{L'équation $P(x_1,\ldots,x_n)=0$ a au plus $d.|S|^{n-1}$ solutions dans $S^n$.}
+    \end{itemize}
+  \end{theo}
+
+\item[cas d'une seule variable :]
+  le théorème adapté à une seule variable donne que \og l'équation $P(x)=0$  a au plus $d.|S|^0=d$ solutions dans $S$.
+  \begin{itemize}
+  \item Or un polynôme de degré $d$ a au plus $d$ racines dans K (la preuve repose sur une récurrence sur le degré du polynôme et sur la division euclidienne qui est possible dans le cas d'une seule variable car $K[x]$ est euclidien puisque K est un corps).
+  \item Donc $P$ a au plus $d$ racines dans $K$ donc a au plus $d$ racines dans $S\subseteq K$. C'est bien ce qu'il fallait démontrer.
+  \end{itemize}
+\item[cas d'un degré $d=1$ :] Il s'agit de prouver que $P(x_1,\ldots,x_n)=0$ a au plus $|S|^{n-1}$ solutions dans $S^n$ (puisque ici $d=1$).
+
+  \begin{itemize}
+  \item     Or si $d=1$ c'est que $P$ est une somme de monômes de degré 1. Plus précisemment, $P$ peut s'écrire $P(x_1,\ldots,x_n)=a_1x_1+a_2x_2+\ldots+a_nx_n$ avec $a_1,\ldots,a_n\in K$.
+  \item    Mais on peut prouver que pour tout (n-1) uplets $(x_2,\ldots,x_n)\in S^{n-1}$ , il existe un et un seul $x_1\in K$ tel que $P(x_1,x_2,\ldots,x_n)=0$.
+    
+    En effet,
+    \begin{eqnarray*}
+      P(x_1,x_2,\ldots,x_n)=0 &\eq& a_1x_1+a_2x_2+\ldots+a_nx_n=0\\
+      &\eq& a_1x_1=-a_2x_2-a_3x_3-\ldots-a_nx_n\\
+      &\eq & x_1=a_1^{-1}(-a_2x_2-a_3x_3-\ldots-a_nx_n)
+    \end{eqnarray*}
+
+  \item Autrement dit, pour tout (n-1) uplets de $(x_2,\ldots,x_n)\in S^{n-1 }$ , il existe \textbf{au plus} un  $x_1\in \textbf{S}\subseteq K$ tel que $P(x_1,x_2,\ldots,x_n)=0$.
+
+  \item Comme le nombre de (n-1) uplets de $S^{n-1}$ est $|S|^{n-1} $, il existe au plus $|S|^{n-1}$ n-uplets de $S^n$ solutions de $P(x_1,\ldots,x_n)=0$.
+  \end{itemize}
+\end{description}
+
+\subsection*{Question 2 :}
+\addcontentsline{toc}{subsection}{Question 2}
+
+\begin{test}[Test de Schwartz et Zippel :]
+  Soit $P$ de degré d. On fixe $S\subseteq K$.
+  \begin{center}
+    \begin{tabular}{|l|l|}
+      \hline
+      \multicolumn{2}{|l|}{Répéter k fois}\\
+      \makebox[1cm]{}& Choisir au hasard $(s_1,\ldots,s_m)\in S^m$\\
+      & Calculer $P(s_1,\ldots,s_m)$\\
+      & Si $P(s_1,\ldots,s_m)\neq 0$\\
+      & Alors retourner NON (Il est certain que $P$ n'est pas nul)\\
+      \multicolumn{2}{|l|}{retourner OUI (il est probable que $P$ soit nul)}\\
+      \hline
+    \end{tabular}
+  \end{center}
+\end{test}
+
+Je n'ai pas précisé les précautions du cours car la question invite à une discussion sur ce sujet :
+
+\begin{itemize}
+\item si le test dit que  $P$ est non nul il est absolument certain que c'est le cas !
+\item si le test dit que $P$ est nul ce n'est pas absolument certain, en effet :
+  \begin{itemize}
+  \item[$\bullet$] Si $P$ n'est pas nul alors la probabilité que $P(s_1,\ldots,s_m)=0$ pour un m-uplet pris au hasard dans $S$ est majorée par $\dfrac{\frac{d}{|S|^{n-1}}}{|S|^n}=\dfrac{d}{|S|}$.
+
+    Autrement dit la probabilité d'affirmer que $P$ est nul car un m-uplet de $S$ pris au hasard l'annule et de se tromper est majorée par $\dfrac{d}{|S|}$.
+  \item[$\bullet$] En répétant $k$ fois cette expérience (ce que fait le test), on peut dire que la probabilité d'affirmer que $P$ est nul car les k m-uplets l'annule et de se tromper est majorée par $\left(\dfrac{d}{|S|}\right)^k$.
+
+  \item[$\bullet$] L'erreur est donc majorée par cette quantité.
+
+  \end{itemize}
+\item Pour que ce test fonctionne il faut
+  \begin{itemize}
+  \item prendre un ensemble S assez grand et surtout de cardinal strictement plus grand que d ! Dans le cours il a été pris 2d pour assurer une division par 2 de l'erreur à chaque tour.
+  \item réaliser un assez grand nombre de répétitions $k$ pour assurer un phénomène d'amplification au test.
+  \end{itemize}
+
+\item Pour réaliser une erreur inférieur à $10^{-15}$, on peut par exemple prendre un ensemble $S$ de cardinal au moins égal à $10d$ et réaliser au moins $k=15$ répétitions.
+
+  L'erreur serait alors inférieur à $\left(\dfrac{d}{10d}\right)^{15}=10^{-15}$.
+\end{itemize}
+
+\subsection*{Question 3 :}
+\addcontentsline{toc}{subsection}{Question 3}
+\og$P_1=P_2 \eq P_1-P_2$ nul\fg donc il suffit de tester si le polynôme $P_1-P_2$ est nul :
+\begin{itemize}
+\item si le test dit que le $P_1-P_2$ n'est pas nul on peut affirmer avec certitude que $P_1\neq P_2$.
+\item si le test dit que $P_1-P_2$ on peut dire qu'il est probable (avec les précautions dont nous avons discutées précédemment) que $P_1=P_2$.
+\end{itemize}
+
+
+\subsection*{Question 4 : }
+\addcontentsline{toc}{subsection}{Question 4}
+
+A a trois fils : $r(f)$, $r(r(f))$ et $r(f,r(f,f,f))$. Nous allons d'abord donner les polynômes de chacun d'entre eux  :
+\begin{itemize}
+\item $f$ a pour polynôme $x_0$ donc $r(f)$ a pour polynôme $x_1-x_0$.
+\item $r(f)$ a pour polynôme $x_1-x_0$ donc $r(r(f))$ a pour polynôme $x_2-(x_1-x_0)$.
+\item $r(f,f,f)$ a pour polynôme $(x_1-x_0)(x_1-x_0)(x_1-x_0)$ donc le polynôme de $r(f,r(f,f,f))$ est\\ $(x_2~-x_0)(x_2-(x_1-x_0)(x_1-x_0)(x_1-x_0))$.
+\end{itemize}
+
+On peut avec ces polynômes générer le polynôme de $A$  :
+$$p_A(x_0,x_1,x_2,x_3)=(x_3-(x_1-x_0))(x_3-(x_2-(x_1-x_0)))(x_3-(x_2-x_0)(x_2-(x_1-x_0)(x_1-x_0)(x_1-x_0)))$$
+
+\subsection*{Question 5 : }
+\addcontentsline{toc}{subsection}{Question 5}
+Faisons une induction sur la hauteur  des sous-arbres d'un arbre A donné : 
+\begin{itemize}
+\item Au niveau des feuilles (hauteur  0), le polynôme est $x_0$ qui est de degré 1 et 1 est évidemment le nombre de feuille d'une feuille !
+\item Supposons qu'à une certaine hauteur $h-1$ le degré des polynômes associés aux sous arbres soit égale à celui du nombre de feuilles.
+
+  Ainsi, nous allons prouver le résultat attendu sur $r(A_1,\ldots,A_k)$ de hauteur h en supposant qu'il est vérifié sur les $A_i$  pour $i\in [1;k]$ (qui sont donc au plus de hauteur  $h-1$ car fils d'un arbre de hauteur $h$) :
+  \begin{itemize}
+  \item les polynômes $p_{A_i}$ sont au moins de degré 1 (puisqu'ils contiennent au moins une feuille) et ne contiennent pas la variable $x_h$ (car sont de hauteur au plus $h-1$).
+
+    On peut donc en déduire qu'\emph{un polynôme $x_h-p_{A_i}$ est du même degré que $p_{A_i}$} car il n'y a pas de monômes en $x_h$ dans $p_{A_i}$ (ce qui évite de faire disparaître un monôme de $p_{A_i}$ ce qui aurait pu faire baisser le degré) et que le degré de $p_{A_i}$ est au moins égal à celui de $x_h$ (car au moins de  degré 1).
+  \item Comme  $p_{r(A_1,\ldots,A_k)}$ est le produit des polynômes de la forme $x_h-p_{A_i}$, son degré est la somme des degrés de ces polynômes, c'est à dire en utilisant l'hypothèse de l'induction,
+
+    $\sum_{i=1}^k degré(A_i)~=~\sum_{i=1}^k (\makebox{nombre de feuilles de }A_i)$. Or la somme des nombres de feuilles des $A_i$ est exactement le nombre de feuille de  $p_{r(A_1,\ldots,A_k)}$. C'est ce qu'on cherchait à établir.
+  \end{itemize}
+\end{itemize}
+Pour tout arbre A, on a bien prouvé par induction que le degré de $p_A$ est bien égal à son nombre de feuilles.
+
+\subsection*{Question 6 : }
+\addcontentsline{toc}{subsection}{Question 6}
+
+Faisons une induction sur la hauteur  des sous-arbres d'un arbre A  donné : 
+\begin{itemize}
+\item Au niveau des feuilles (taille 0 par définition), on a bien : taille(une feuille)+nombreFeuilles(une feuille)=0+1=1=taille($x_0$).
+
+  Et comme $x_0$ est le polynôme associé à une feuille, on a bien le résultat attendu.
+\item Supposons qu'à une certaine hauteur $h-1$ la taille des polynômes associés aux sous arbres soit égale à la somme de leur taille et de leur nombre de feuilles.
+
+  Ainsi, nous allons prouver le résultat attendu sur $r(A_1,\ldots,A_k)$ de hauteur h en supposant qu'il est vérifié sur les $A_i$  pour $i\in [1;k]$ (qui sont donc au plus de hauteur  $h-1$ car fils d'un arbre de hauteur $h$) :
+  \begin{eqnarray*}
+    taille(p_{r(A_1,\ldots,A_k)})&=& taille(\prod_{i=1}^k (x_h-p_{A_i})\\
+    &=& \sum_{i=1}^k(taille(x_h-p_{A_i}))\\
+    &=&\sum_{i=1}^k(1+taille(p_{A_i}))\\
+    &=& \sum_{i=1}^k 1 +\sum_{i=1}^k (taille(A_i)+nombreFeuilles(A_i))\\
+    &=& k+ \sum_{i=1}^ktaille(A_i)+\sum_{i=1}^k nombreFeuilles(A_i)\\
+    &=& taille({r(A_1,\ldots,A_k)})+nombreFeuilles({r(A_1,\ldots,A_k)})\\
+  \end{eqnarray*}
+
+  On a bien prouvé que la taille du polynôme associé à  ${r(A_1,\ldots,A_k)}$ est égale à la somme de la taille de ${r(A_1,\ldots,A_k)}$ et de son nombre de feuilles. 
+\end{itemize}
+
+Pour tout arbre A, on a bien prouvé par induction que la taille de $p_A$ est bien égal à taille(A)+nombreFeuilles(A).
+
+\begin{center}
+  \line(1,0){150}
+\end{center}
+
+La taille d'un arbre est exactement le nombre de liens parent-enfant car à chaque fois qu'on remonte dans la hiérarchie on rajoute à la taille le nombre de liens du parent introduit avec chacun de ses enfants.
+
+Donc, si on prend le vocabulaire des graphes, la taille d'un arbre est donc le nombre de ses arêtes. Or le nombre des arêtes d'un graphe est exactement égal à son nombre de noeuds moins 1 (j'admets ce résultat mais cela peut se montrer par induction).
+
+De plus, le nombre de feuilles est au plus égale au nombre de noeuds (puisqu'une feuille est un noeud).
+
+Ainsi, pour un arbre A donné, la taille de $p_A$ qui est égale à taille(A)+nombreFeuilles(A) est inférieur à 2 fois le nombre de noeuds (puisque chaque élément de la somme est inférieur au nombre de noeuds).
+
+Cela montre que \fbox{$taille(p_A)=O(nombreNoeuds(A))$}.
+
+
+(On peut même dire que $taille(p_A)=\Theta(nombreNoeuds(A))$ car la taille de l'arbre vaut le nombre de noeuds de A).
+
+\subsection*{Question 7 : }
+\addcontentsline{toc}{subsection}{Question 7}
+\begin{itemize}
+\item Deux arbres de hauteur 0 sont toujours isomorphes par définition.
+
+  Ils ont aussi la même hauteur (0), la même taille (0), le même nombre de feuilles (1) et des polynômes identiques ($x_0$).
+  Donc pour deux arbres de hauteur 0, l'équivalence annoncée est bien vérifiée.
+\item Soient deux arbres, de hauteurs non nulles, $A=r(A_1,\ldots,A_k)$ et $B=r(B_1,\ldots,B_k')$
+
+  \begin{tabular}{rcl}
+    $A\simeq B$ &$\eq$& $k=k'$ et $\exists \sigma \in S_k$ tel que $\forall i\in[1;k] A_i\simeq B_{\sigma(i)}$. \\
+    &$\eq$&
+    $k=k'$ et $\exists \sigma \in S_k$ tel que $\forall i\in[1;k]
+    \left\{\begin{array}{l}
+    hauteur( A_i )=hauteur( B_{\sigma(i)} )\\
+    taille( A_i )=taille( B_{\sigma(i)} )\\
+    nombreFeuilles( A_i )=nombreFeuilles( B_{\sigma(i)} )\\
+    p_{A_i}=p_{B_{\sigma(i)}} \\
+    \end{array}\right.$
+  \end{tabular}
+
+  \begin{description}
+  \item[$\Rightarrow$ :] Supposons que $A\simeq B$ (on a alors les conditions équivalentes citées ci-dessus).
+
+    On a alors (la justification essentielle est que $\sigma$ est une bijection de $[1;k]$ vers $[1;k]$ et donc il revient au même de parcourir tous les $i$ ou tous les $\sigma(i)$ ) :
+
+    \begin{tabular}{l|l}
+      \begin{minipage}{0.5\linewidth}
+        \begin{eqnarray*}
+          hauteur(A)&=&1+\underset{i\in[1;k]}{Max}(hauteur(A_i))\\
+          &=&1+\underset{i\in[1;k]}{Max}(hauteur(B_{\sigma(i)}))\\
+          &=&1+\underset{i\in[1;k]}{Max}(hauteur(B_i))\\
+          &=& hauteur(B)
+        \end{eqnarray*}
+      \end{minipage}
+      &
+      \begin{minipage}{0.5\linewidth}
+        \begin{eqnarray*}
+          taille(A)&=&k+\sum_{i=1}^ktaille(A_i)\\
+          &=&k+\sum_{i=1}^ktaille(B_{\sigma(i)})\\
+          &=&k+\sum_{i=1}^ktaille(B_i)\\
+          &=& taille(B)
+        \end{eqnarray*}
+      \end{minipage}\\
+      \hline
+      \begin{minipage}{0.5\linewidth}
+        \begin{eqnarray*}
+          nbFeuilles(A)&=&\sum_{i=1}^knbFeuilles(A_i)\\
+          &=&\sum_{i=1}^knbFeuilles(B_{\sigma(i)})\\
+          &=&\sum_{i=1}^knbFeuilles(B_i)\\
+          &=& nbFeuilles(B)
+        \end{eqnarray*}
+      \end{minipage}
+      &
+      \begin{minipage}{0.5\linewidth}
+        \begin{eqnarray*}
+          p_A&=&\prod_{i=1}^k (x_h-p_{A_i})\\
+          &=&\prod_{i=1}^k (x_h-p_{B_{\sigma(i)}})\\
+          &=&\prod_{i=1}^k (x_h-p_{B_i})\\
+          &=&p_B
+        \end{eqnarray*}
+      \end{minipage}
+
+    \end{tabular}
+
+    A et B vérifient bien toutes les conditions données par l'énoncé. On a donc prouvé l'implication en partant de $A\simeq B$.
+  \item[$\Leftarrow$ : ] Supposons que $p_A=\prod_{i=1}^k (x_h-p_{A_i})=p_B=\prod_{i=1}^{k'} (x_h-p_{B_i})$.
+
+    Comme la factorisation d'un polynôme est unique à l'ordre des facteurs près, on a forcément $k=k'$ et les k facteurs de $p_A$ sont identiques aux k facteurs de $p_B$ à permutations près.
+
+    Autrement dit, il existe une permutation $\pi$ de l'ensemble des indices $\{1,\ldots,k\}$ telle que $p_{A_i}= p_{B_{\pi(i)}}$ pour tout indice $i\in\{1,\ldots,k\}$. Mais par hypothèse d'induction, dire que $p_{A_i}= p_{B_{\pi(i)}}$ revient à dire que $A_i\simeq B_{\pi(i)}$. 
+
+
+    On a bien prouvé que $k=k'$ et qu'il existe une permutation $\pi$ de l'ensemble des indices $\{1,\ldots,k\}$ telle que ${A_i}\simeq {B_{\pi(i)}}$ pour tout indice $i\in\{1,\ldots,k\}$ : ainsi $A\simeq B$.
+  \end{description}
+
+  
+\end{itemize}
+Les deux implications permettent d'affirmer que $A\simeq B $ si et seulement si les conditions suivants sont toutes deux réalisées :
+\begin{enumerate}
+\item A et B sont de même hauteur $h$ et de même taille et ont le même nombre de feuilles $d$ ;
+\item les polynômes associés $p_A$ et $p_B$ sont identiques.
+\end{enumerate}
+
+(Ça ne bloque pas le raisonnement mais j'ai tout de même l'impression que la condition 2 implique la condition 1, ce qui rend cette dernière inutile dans ma démonstration. Ou bien quelque chose m'a échappé)
+
+
+\subsection*{Question 8 : }
+\addcontentsline{toc}{subsection}{Question 8}
+Soient deux arbres A et B.
+
+Je suppose qu'il existe une fonction hauteur, taille, nbFeuilles et poly qui donnent respectivement la hauteur, la taille, le nombre de feuilles et le polynôme associé à un arbre.
+Je suppose également que nous disposont d'un corps K et d'une fonction ensAkElements(n) capable de générer un ensemble de n éléments de K.
+
+
+  \begin{center}
+    \begin{tabular}{|l|l|lr|}
+      \hline
+      1&Si &$hauteur(A)\neq hauteur(B)$ ou si $nbFeuilles(A)\neq nbFeuilles(B)$&\\
+      2& & ou si $taille(A)\neq taille(B)$&\textbf{(1)}\\
+      3& \multicolumn{2}{|l}{Alors retourner A et B ne sont pas isomorphes (résultat certain)}&\\
+      4&\multicolumn{2}{|l}{d=nbFeuilles(A)}&\\
+      5&\multicolumn{2}{|l}{S=ensAkElement(2d)}& \textbf{(2)}\\
+      6&\multicolumn{2}{|l}{Répéter k fois}&\textbf{(3)}\\
+      7&\makebox[1cm]{}& Choisir au hasard $(s_1,\ldots,s_d)\in S^d$&\\
+      8& & Calculer $P_A(s_1,\ldots,s_d)-P_B(s_1,\ldots,s_d)$&\\
+      9& & Si $P_A(s_1,\ldots,s_d)-P_B(s_1,\ldots,s_d)\neq 0$&\\
+      10& & Alors retourner A et B ne sont pas isomorphes (c'est certain)&\\
+      11& \multicolumn{2}{|l}{retourner A et B sont isomorphes (c'est probable)}&\\
+      \hline
+    \end{tabular}
+  \end{center}
+
+  \begin{description}
+    \item[(1) ] Cette étape permet de faire un test élémentaire de la situation et me permet de ne manipuler qu'une taille, qu'une hauteur et qu'un nombre de feuilles ici et dans la question d'après.
+  \item[(2) ] on a prouvé à la question 5 que le degré de $p_A$ est égale à son nombre de feuilles et on a vu qu'en fixant un ensemble deux fois plus grand que le degré du polynôme à tester on divisait (au moins) par 2 la probabilité d'erreurs à chaque tour de boucle.
+    \item[(3) ] k est à choisir en fonction de la marge d'erreur qu'on veut se donner : l'erreur possible est ici que l'algorithme prétende que A et B sont isomorphes alors qu'ils ne le sont pas. Cette erreur a une probabilité inférieure à $\dfrac{1}{2^k}$ de se produire (c'est l'analyse faite à la question 2).
+  \end{description}
+
+  \subsection*{Question 9 :}
+\addcontentsline{toc}{subsection}{Question 9}
+
+  je suppose donné la hauteur des arbres et leur nombre de feuilles (car j'ignore comment ceci est calculé). On se place dans le cas où la complexité sera la plus grande (l'algorithme prétendant que A et B sont isomorphes)
+
+  
+  \begin{tabular}{llr}
+  \textbf{l1$\rightarrow$ l4} & 
+    \begin{minipage}{0.7\textwidth} les 3 premières lignes de l'algorithme sont négligeables par rapport au reste
+    \end{minipage}\\\hline
+  \textbf{l5} & \begin{minipage}{0.7\textwidth}  Générer S se fait par génération de 2d nombres aléatoire :  \end{minipage}& \textbf{2d}\\\hline
+  \textbf{l7} & \begin{minipage}{0.7\textwidth} Choisir au hasard $(s_1,\ldots,s_d)$ se fait par génération de d nombres aléatoires et cette étape est faite k fois: \end{minipage}&\textbf{+k.d}\\\hline
+  \textbf{l8} & \begin{minipage}{0.7\textwidth} Calculer $P_A(s_1,\ldots,x_h)$ utilise un nombre d'opérations égales à la taille du polynôme moins 1 car il y a exactement une opération à effectuer entre chacune des variables. Comme nous devons aussi faire ce calcul pour $P_B$ et ensuite soustraire les résultats, on doit faire $taille(p_A)-1+taille(p_B)-1+1$. De plus, comme la taille du polynôme est donné par la somme de la taille de l'arbre et de sa hauteur, comme les tailles et hauteurs des deux arbres sont les mêmes (la première ligne de l'algorithme écarte les autres cas), on peut dire que le nombre d'opérations est : $taille(A)+hauteur(1)-1+taille(A)+hauteur(1)-1+1=2taille(1)+2hauteur(A)-1$ : \end{minipage}&
+  \begin{minipage}{0.1\textwidth}
+    \textbf{+2k.taille(A)}
+
+    
+    \textbf{+2k.hauteur(A)}
+    \textbf{-k}
+    \end{minipage}\\\hline
+  \textbf{l9} & \begin{minipage}{0.7\textwidth} une soustraction (répétée k fois):\end{minipage}& \textbf{+k}\\\hline
+  &\textbf{TOTAL :  2d+k.d+2k.taille(A)+2k.hauteur(A)+k}\\
+  \end{tabular}
+
+  Cette complexité est peu parlante mais:
+  \begin{itemize}
+  \item k est une valeur fixée (par exemple avec k=40 on aura une probabilité d'erreur inférieur à $\frac{1}{2^{40}}$).
+  \item la hauteur est inférieur à la taille de l'arbre.
+  \item le nombre de feuilles d est comparable ou inférieur à la taille.
+  \end{itemize}
+  Donc dans la complexité est majorable par une constante multipliée par la taille de l'arbre : l'algorithme a une complexité en $O(taille\, de\,l'arbre)$.
+\end{document}
+
+
+

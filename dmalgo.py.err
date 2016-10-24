@@ -1,0 +1,4 @@
+  File "<stdin>", line 46
+    arbrebinomial(``A'',3,0.4)
+                      ^
+SyntaxError: invalid syntax

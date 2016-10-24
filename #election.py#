@@ -1,0 +1,55 @@
+#!/usr/bin/python
+
+from random import randint
+
+class Noeud():
+    def __init__(self,n):
+        self.statut='actif'
+        self.valeur=randint(1,n)
+        self.compteur=n
+        self.precedent=
+
+    def tirage(self):
+        self.valeur=randint(1,self.compteur)
+    
+
+class Ring():
+    def __init__(self,n):
+        self.liste=[]
+        for x in range(n):
+            self.liste.append(Noeud(n))
+        self.nbactifs=n
+
+
+    def listeActifs(self):
+        #renvoie la liste des actifs
+        l=[]
+        for x in self.liste:
+            if x.statut=='actif':
+                l.append(x)
+        return l
+
+    def suivant(self,l,element):
+        if index(element)==len(l)-1:
+            return l[0]
+        else:
+            return l[index(element)+1]
+            
+if __name__=='__main__':
+    n=20
+    ring=Ring(n)
+    for x in ring.liste:
+        print(x.valeur,x.statut,x.compteur)
+
+    leader=False
+    while not leader:
+        l=ring.listeActifs()
+        for x in l:
+            x.compteur=0
+            x.tirage()
+
+        for x in l:
+            
+            
+
+    

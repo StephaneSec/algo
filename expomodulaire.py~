@@ -1,0 +1,15 @@
+#! /usr/bin/python
+
+def expo(a,p,n):
+    resultat,puissance,w,mult=1,a,p,0
+    while w>0:
+        if w%2==1:
+            resultat=puissance*resultat%n
+            mult+=1
+        puissance=puissance*puissance%n
+        mult+=1
+        w=w//2
+    return resultat,mult
+
+if __name__=='__main__':
+    print(expo(23,2**50,13))

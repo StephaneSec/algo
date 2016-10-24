@@ -1,0 +1,23 @@
+#!/usr/bin/python
+
+from random import randint
+
+class noeud():
+    def __init__(self,n):
+        self.statut='actif'
+        self.valeur=randint(1,n)
+        self.compteur=n
+
+    def tirage(self):
+        self.valeur=randint(1,self.compteur)
+    
+
+if __name__=='__main__':
+    n=20
+    ring=[]
+    for x in range(n):
+        ring[x]=noeud()
+    for x in ring:
+        print(ring[x].valeur)
+
+    
